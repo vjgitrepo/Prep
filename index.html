@@ -346,7 +346,7 @@
         btnForward.onclick = function() { if (pointer === (activeTestSet.length - 1)) { buildSummary(); } else { pointer++; refreshUI(); } };
         document.getElementById("reload-btn").onclick = function() { pointer = 0; userChoices.fill(null); refreshUI(); };
 
-        window.onload = loadManifest;
+        window.onload = initCatalogIndex;
     </script>
 </body>
 </html>
