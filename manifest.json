@@ -3,6 +3,12 @@
   , 
   { "name": "[📝 Exam] efficiency networking ", "file": "efficiency_networking.js" } 
   , 
+  { "name": "[📖 Study] FlexCache Deep Architecture", "file": "FlexCache Deep Architecture.js" } 
+  , 
+  { "name": "[📝 Exam] flexcache exam ", "file": "flexcache_exam.js" } 
+  , 
+  { "name": "[📝 Exam] metrocluster fabricpool ", "file": "metrocluster_fabricpool.js" } 
+  , 
   { "name": "[📖 Study] Ontap Release Deepdive", "file": "Ontap Release Deepdive.js" } 
   , 
   { "name": "[📝 Exam] platforms ha ", "file": "platforms_ha.js" } 
