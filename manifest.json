@@ -1,0 +1,15 @@
+[ 
+  { "name": "[📝 Exam] dataontap core ", "file": "dataontap_core.js" } 
+  , 
+  { "name": "[📝 Exam] efficiency networking ", "file": "efficiency_networking.js" } 
+  , 
+  { "name": "[📝 Exam] platforms ha ", "file": "platforms_ha.js" } 
+  , 
+  { "name": "[📝 Exam] protection security ", "file": "protection_security.js" } 
+  , 
+  { "name": "[📝 Exam] questions", "file": "questions.js" } 
+  , 
+  { "name": "[📖 Study] s3 hybrid deepdive", "file": "s3_hybrid_deepdive.js" } 
+  , 
+  { "name": "[📖 Study] snapsmirror s3 ", "file": "snapsmirror_s3.js" } 
+] 

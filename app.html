@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>NetApp NCDA Automated Study & Exam Hub</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: #0b0f19; color: #f1f5f9; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        header { background-color: #1e293b; border-bottom: 1px solid #334155; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .logo-badge { background-color: #2563eb; color: white; padding: 6px 12px; font-weight: bold; font-size: 14px; border-radius: 4px; }
+        
+        /* Interactive Dual-Mode Header Slider Controls */
+        .mode-toggle-container { display: flex; background: #0f172a; padding: 4px; border-radius: 8px; border: 1px solid #334155; }
+        .mode-btn { background: transparent; border: none; color: #64748b; font-size: 12px; font-weight: bold; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .mode-btn.active { background: #2563eb; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        
+        .main-frame { flex: 1; display: flex; overflow: hidden; width: 100%; }
+        sidebar { width: 300px; background-color: #0f172a; border-right: 1px solid #1e293b; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar-heading { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 5px; }
+        .topic-btn { background-color: #1e293b; border: 1px solid #334155; color: #cbd5e1; width: 100%; padding: 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; text-align: left; margin-bottom: 8px; transition: all 0.2s; }
+        .topic-btn:hover { background-color: #2563eb; color: white; border-color: #3b82f6; }
+        
+        .workspace { flex: 1; background-color: #0b0f19; padding: 30px; overflow-y: auto; display: flex; align-items: center; justify-content: center; }
+        .box { width: 100%; max-width: 850px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .row { display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 20px; font-size: 14px; font-weight: bold; }
+        .text { font-size: 16px; line-height: 1.5; margin-bottom: 20px; color: #f8fafc; }
+        
+        .btn { text-align: left; padding: 14px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; font-size: 14px; cursor: pointer; width: 100%; margin-bottom: 10px; display: block; white-space: normal !important; line-height: 1.4 !important; word-wrap: break-word !important; }
+        .btn:hover:not(:disabled) { background: #1e293b; }
+        .btn.good { background: #064e3b !important; border-color: #10b981 !important; color: #a7f3d0 !important; }
+        .btn.bad { background: #4c0519 !important; border-color: #ef4444 !important; color: #fecdd3 !important; }
+        .btn.off { opacity: 0.5 !important; color: #94a3b8 !important; }
+        
+        .alert { padding: 15px; border-radius: 6px; margin-top: 15px; font-size: 14px; border: 1px solid #334155; }
+        .win { background: rgba(6,78,59,0.2); color: #a7f3d0; }
+        .lose { background: rgba(76,5,25,0.2); color: #fecdd3; }
+        .nav { display: flex; justify-content: space-between; margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px; }
+        .go { background: #2563eb; color: white; padding: 8px 16px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .go:disabled { opacity: 0.3; }
+        .hide { display: none !important; }
+
+        /* Deep Study Documentation Style Layout Primitives */
+        .study-scroll-panel { font-size: 15px; line-height: 1.7; color: #cbd5e1; text-align: left; max-height: 70vh; overflow-y: auto; padding-right: 10px; }
+        .study-scroll-panel h2 { font-size: 20px; font-weight: bold; color: #38bdf8; margin: 20px 0 10px 0; border-bottom: 1px solid #334155; padding-bottom: 4px; }
+        .study-scroll-panel h3 { font-size: 15px; font-weight: bold; color: #f59e0b; margin: 15px 0 5px 0; }
+        .study-scroll-panel ul { margin-left: 20px; margin-bottom: 15px; }
+        .study-scroll-panel li { margin-bottom: 6px; }
+        .study-scroll-panel strong { color: #f8fafc; }
+        .code-snippet { background: #020617; border: 1px solid #1e293b; font-family: monospace; font-size: 12px; padding: 12px; border-radius: 6px; color: #a7f3d0; margin: 10px 0; overflow-x: auto; white-space: pre; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center;">
+            <div class="logo-badge">NCDA WORKSPACE</div>
+            <div style="margin-left: 10px;">
+                <h1 style="font-size: 18px; font-weight: 700;">Unified Study &amp; Evaluation Hub</h1>
+                <p style="font-size: 12px; color: #94a3b8;">Automated Topic Parsing Matrix</p>
+            </div>
+        </div>
+        
+        <!-- Mode Switcher -->
+        <div class="mode-toggle-container">
+            <button id="mode-quiz" class="mode-btn active">📝 Exam Sandbox Mode</button>
+            <button id="mode-study" class="mode-btn">📖 Deep Study Mode</button>
+        </div>
+    </header>
+
+    <div class="main-frame">
+        <sidebar>
+            <div class="sidebar-heading">Available Modules</div>
+            <div id="sidebar-menu-list">Scanning catalog directory...</div>
+        </sidebar>
+
+        <section class="workspace">
+            <div id="welcome-view" class="box">
+                <div style="text-align: center; padding: 40px 20px;">
+                    <h2 style="font-size: 22px; font-weight: bold; margin-bottom: 10px; color: #38bdf8;">NCDA Multi-Mode Hub Initialized</h2>
+                    <p style="color: #94a3b8; font-size: 14px; line-height: 1.5;">Select an active module down the sidebar menu, then toggle between Exam Sandbox and Deep Study Mode in the top header at any time!</p>
+                </div>
+            </div>
+
+            <!-- Quiz Layout Container View -->
+            <div id="sandbox-view" class="box hide">
+                <div id="quiz-block">
+                    <div class="row">
+                        <div id="top-title">Module Target</div>
+                        <div id="top-status">Question: 0 / 0</div>
+                    </div>
+                    <div id="main-prompt" class="text">Extracting structural criteria blocks...</div>
+                    <div id="choices-block"></div>
+                    <div id="info-block" class="alert hide"></div>
+                    <div class="nav">
+                        <button id="back-btn" class="go">Previous</button>
+                        <button id="forward-btn" class="go">Next Question</button>
+                    </div>
+                </div>
+
+                <div id="end-block" class="hide" style="text-align: center; padding: 15px 0;">
+                    <div style="font-size: 40px; margin-bottom: 10px;">🏆</div>
+                    <h2 style="margin-bottom: 10px;">Module Evaluation Completed</h2>
+                    <h1 id="final-score" style="margin-bottom: 25px; color: #2563eb;">0% ACCURACY</h1>
+                    <button id="reload-btn" class="go">Restart Module</button>
+                </div>
+            </div>
+
+            <!-- New Study Documentation Container View -->
+            <div id="study-view" class="box hide">
+                <div class="row">
+                    <div id="study-title" style="color: #38bdf8; font-size: 16px;">Architectural Breakdown</div>
+                    <div style="color: #64748b; font-size: 12px;">ONTAP 9.18 Blueprint Ref Docs</div>
+                </div>
+                <div id="study-content-area" class="study-scroll-panel custom-scrollbar">
+                    Select a module to view indepth architectural reference data sheets...
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        var pointer = 0;
+        var userChoices = [];
+        var activeTestSet = [];
+        var currentMode = "quiz"; // Global state tracker tracking 'quiz' or 'study'
+
+        const sidebarMenu = document.getElementById("sidebar-menu-list");
+        const welcomeView = document.getElementById("welcome-view");
+        const sandboxView = document.getElementById("sandbox-view");
+        const studyView = document.getElementById("study-view");
+        
+        const viewQuiz = document.getElementById("quiz-block");
+        const viewEnd = document.getElementById("end-block");
+        const domTitle = document.getElementById("top-title");
+        const domStatus = document.getElementById("top-status");
+        const domPrompt = document.getElementById("main-prompt");
+        const domChoices = document.getElementById("choices-block");
+        const domInfo = document.getElementById("info-block");
+        const btnBack = document.getElementById("back-btn");
+        const btnForward = document.getElementById("forward-btn");
+        const domFinal = document.getElementById("final-score");
+        const studyContentArea = document.getElementById("study-content-area");
+        const studyTitle = document.getElementById("study-title");
+
+        const modeQuizBtn = document.getElementById("mode-quiz");
+        const modeStudyBtn = document.getElementById("mode-study");
+
+        // Dual Mode Core Switching Logics
+        modeQuizBtn.onclick = function() {
+            currentMode = "quiz";
+            modeQuizBtn.classList.add("active");
+            modeStudyBtn.classList.remove("active");
+            syncViewVisibility();
+        };
+
+        modeStudyBtn.onclick = function() {
+            currentMode = "study";
+            modeStudyBtn.classList.add("active");
+            modeQuizBtn.classList.remove("active");
+            syncViewVisibility();
+        };
+
+        function syncViewVisibility() {
+            if (activeTestSet.length === 0) return; // Guard logic if no data file loaded
+            welcomeView.classList.add("hide");
+            
+            if (currentMode === "quiz") {
+                studyView.classList.add("hide");
+                sandboxView.classList.remove("hide");
+                refreshUI();
+            } else {
+                sandboxView.classList.add("hide");
+                studyView.classList.remove("hide");
+                renderStudyNotes();
+            }
+        }
+
+// Dynamic Filter Engine: Shows only files matching the active mode tab selection
+        function filterSidebarByMode() {
+            const buttons = sidebarMenu.getElementsByClassName("topic-btn");
+            for (var i = 0; i < buttons.length; i++) {
+                const btnText = buttons[i].innerText;
+                
+                if (currentMode === "quiz") {
+                    // Hide any file tagged with [Study] when in Exam mode
+                    if (btnText.includes("[📖 Study]")) {
+                        buttons[i].classList.add("hide");
+                    } else {
+                        buttons[i].classList.remove("hide");
+                    }
+                } else if (currentMode === "study") {
+                    // Hide any file tagged with [Exam] when in Study mode
+                    if (btnText.includes("[📝 Exam]")) {
+                        buttons[i].classList.add("hide");
+                    } else {
+                        buttons[i].classList.remove("hide");
+                    }
+                }
+            }
+        }
+
+        // Updated Mode Switcher Buttons with Integrated Filter Refreshes
+        modeQuizBtn.onclick = function() {
+            currentMode = "quiz";
+            modeQuizBtn.classList.add("active");
+            modeStudyBtn.classList.remove("active");
+            filterSidebarByMode();
+            syncViewVisibility();
+        };
+
+        modeStudyBtn.onclick = function() {
+            currentMode = "study";
+            modeStudyBtn.classList.add("active");
+            modeQuizBtn.classList.remove("active");
+            filterSidebarByMode();
+            syncViewVisibility();
+        };
+
+        function loadManifest() {
+            fetch('manifest.json')
+                .then(response => response.json())
+                .then(modules => {
+                    sidebarMenu.innerHTML = "";
+                    modules.forEach(mod => {
+                        const btn = document.createElement("button");
+                        btn.className = "topic-btn";
+                        btn.innerText = mod.name; // Retains the clean auto-classified name tag
+                        btn.onclick = () => loadModuleScript(mod.file);
+                        sidebarMenu.appendChild(btn);
+                    });
+                    
+                    // Run the initial filter sequence upon page load
+                    filterSidebarByMode();
+                })
+                .catch(() => {
+                    sidebarMenu.innerHTML = "<div style='color:#ef4444; font-size:12px;'>Error: Verify manifest.json and run local server.</div>";
+                });
+        }
+
+        function loadModuleScript(filename) {
+            const oldScript = document.getElementById('dynamic-module-script');
+            if (oldScript) oldScript.remove();
+
+            const script = document.createElement('script');
+            script.id = 'dynamic-module-script';
+            script.src = filename;
+            script.onload = function() {
+                if (typeof testSet !== 'undefined' && testSet.length > 0) {
+                    activeTestSet = testSet;
+                    userChoices = new Array(activeTestSet.length).fill(null);
+                    pointer = 0;
+                    syncViewVisibility();
+                }
+            };
+            document.head.appendChild(script);
+        }
+
+        function renderStudyNotes() {
+            var activeItem = activeTestSet[0];
+            studyTitle.innerText = "Study Guide: " + activeItem.title;
+            
+            // Evaluates if custom documentation notes payload exists inside the loaded .js file
+            if (typeof studyNotesPayload !== 'undefined' && studyNotesPayload) {
+                studyContentArea.innerHTML = studyNotesPayload;
+            } else {
+                // Fallback automated compiler generating cheat sheets from the quiz notes array parameters
+                var htmlNotesBuffer = "<h2>Dynamic Review Blueprint Reference Cheat Sheet</h2><p style='margin-bottom:15px;'>Reviewing core definitions mapped directly out of this module's training data guidelines:</p>";
+                activeTestSet.forEach(function(item, idx) {
+                    htmlNotesBuffer += "<h3>" + (idx + 1) + ". " + item.title + "</h3><p style='margin-bottom:10px;'><strong>Core Principle:</strong> " + item.ask + "</p><p style='margin-bottom:20px; font-size:13px; color:#a7f3d0; background:#020617; padding:10px; border-radius:6px;'><strong>Architectural Fact:</strong> " + item.note + "</p>";
+                });
+                studyContentArea.innerHTML = htmlNotesBuffer;
+            }
+            studyContentArea.scrollTop = 0;
+        }
+
+        function refreshUI() {
+            viewQuiz.classList.remove("hide");
+            viewEnd.classList.add("hide");
+            var activeItem = activeTestSet[pointer];
+            domTitle.innerText = activeItem.title;
+            domStatus.innerText = "Question: " + (pointer + 1) + " / " + activeTestSet.length;
+            domPrompt.innerText = activeItem.ask;
+            domChoices.innerHTML = "";
+
+            for (var idx = 0; idx < activeItem.choices.length; idx++) {
+                var clicker = document.createElement("button");
+                clicker.className = "btn";
+                var currentChoice = userChoices[pointer];
+                var isSelected = currentChoice !== null;
+                
+                if (!isSelected) {
+                    let closureIndex = idx;
+                    clicker.onclick = function() { userChoices[pointer] = closureIndex; refreshUI(); };
+                } else {
+                    clicker.disabled = true;
+                    if (idx === activeItem.rightIndex) clicker.classList.add("good");
+                    else if (idx === currentChoice) clicker.classList.add("bad");
+                    else clicker.classList.add("off");
+                }
+                var symbol = String.fromCharCode(65 + idx);
+                clicker.innerText = symbol + ") " + activeItem.choices[idx];
+                domChoices.appendChild(clicker);
+            }
+
+            if (userChoices[pointer] !== null) {
+                domInfo.classList.remove("hide");
+                var scoreCheck = userChoices[pointer] === activeItem.rightIndex;
+                domInfo.className = scoreCheck ? "alert win" : "alert lose";
+                domInfo.innerHTML = "<strong>" + (scoreCheck ? "CORRECT" : "INCORRECT") + "</strong><br>" + activeItem.note;
+            } else {
+                domInfo.classList.add("hide");
+            }
+            btnBack.disabled = pointer === 0;
+            btnForward.innerText = pointer === (activeTestSet.length - 1) ? "View Summary" : "Next Question";
+        }
+
+        function buildSummary() {
+            viewQuiz.classList.add("hide");
+            viewEnd.classList.remove("hide");
+            var tally = 0;
+            for (var i = 0; i < activeTestSet.length; i++) {
+                if (userChoices[i] === activeTestSet[i].rightIndex) tally++;
+            }
+            var finalPercentage = Math.round((tally / activeTestSet.length) * 100);
+            domFinal.innerText = finalPercentage + "% ACCURACY";
+            domFinal.style.color = finalPercentage >= 64 ? "#10b981" : "#ef4444";
+        }
+
+        btnBack.onclick = function() { if (pointer > 0) { pointer--; refreshUI(); } };
+        btnForward.onclick = function() { if (pointer === (activeTestSet.length - 1)) { buildSummary(); } else { pointer++; refreshUI(); } };
+        document.getElementById("reload-btn").onclick = function() { pointer = 0; userChoices.fill(null); refreshUI(); };
+
+        window.onload = loadManifest;
+    </script>
+</body>
+</html>
