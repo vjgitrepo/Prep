@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <title>NetApp NCDA Automated Study & Exam Hub</title>
     <style>
+        /* Modern Fluid UI Layout - Scaled to fill 100% of the laptop viewport real estate */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; transition: background 0.3s, color 0.3s; }
         
+        /* THEME VARIABLES LOGIC MATRIX */
         body.dark-theme { background-color: #0b0f19; color: #f1f5f9; }
         body.light-theme { background-color: #f8fafc; color: #0f172a; }
 
@@ -21,6 +23,7 @@
         .mode-btn { background: transparent; border: none; color: #64748b; font-size: 12px; font-weight: bold; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
         .mode-btn.active { background: #2563eb; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
         
+        /* Premium Theme Toggle Switch Button */
         .theme-switch-btn { background: #475569; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         body.light-theme .theme-switch-btn { background: #cbd5e1; color: #0f172a; }
         .theme-switch-btn:hover { background: #3b82f6; color: white; }
@@ -38,9 +41,11 @@
         body.light-theme .topic-btn { background-color: #ffffff; color: #334155; }
         .topic-btn:hover { background-color: #2563eb !important; color: white !important; border-color: #3b82f6 !important; }
         
+        /* Fluid Full-Screen Real Estate Optimization */
         .workspace { flex: 1; padding: 25px; overflow-y: auto; display: flex; align-items: flex-start; justify-content: center; }
         .box { width: 100%; max-width: 100%; background: transparent; border: none; padding: 0; box-shadow: none; }
         
+        /* Enhanced Large In-Depth Text Layouts */
         .row { display: flex; justify-content: space-between; border-bottom: 2px solid #2563eb; padding-bottom: 12px; margin-bottom: 25px; font-size: 15px; font-weight: bold; }
         .text { font-size: 19px; line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
         
@@ -62,6 +67,7 @@
         .go:disabled { opacity: 0.3; }
         .hide { display: none !important; }
 
+        /* Document Reading Panel Styles */
         .study-scroll-panel { font-size: 17px; line-height: 1.75; text-align: left; padding-right: 15px; }
         body.dark-theme .study-scroll-panel { color: #cbd5e1; }
         body.light-theme .study-scroll-panel { color: #334155; }
@@ -73,58 +79,59 @@
         .code-snippet { background: #020617; border: 1px solid #1e293b; font-family: monospace; font-size: 13px; padding: 16px; border-radius: 8px; color: #38bdf8; margin: 15px 0; overflow-x: auto; white-space: pre; line-height: 1.5; }
         
         .metadata-box { background-color: rgba(2,6,23,0.4); border: 1px solid rgba(51,65,85,0.2); border-radius: 6px; padding: 12px; font-size: 13px; line-height: 1.5; margin-top: auto; }
-        body.light-theme .metadata-box { background-color: #cbd5e1; color: #475569; }
+        body.light-theme .metadata-box { background-color: #eaefe5; color: #475569; }
     </style>
 </head>
-<body class="dark-theme">
-    <!-- Header Controls Bar -->
+<body class="dark-theme"> <!-- Defaults directly to Dark Theme Mode -->
+
+    <!-- Header Tracker Component Row -->
     <header>
         <div style="display: flex; align-items: center;">
-            <div class="logo-badge">NCDA MASTER HUB</div>
+            <div class="logo-badge">NCDA MASTER PLATFORM</div>
             <div style="margin-left: 12px;">
                 <h1 style="font-size: 19px; font-weight: bold;">Unified Study &amp; Evaluation Hub</h1>
-                <p style="font-size: 12px; color: #64748b;">Automated Widescreen Layout Configuration</p>
+                <p style="font-size: 12px; color: #64748b;">Automated Widescreen Real Estate Layout Mapping</p>
             </div>
         </div>
         
         <div class="header-controls">
+            <!-- Mode Selector Switch -->
             <div class="mode-toggle-container">
                 <button id="mode-quiz" class="mode-btn active">📝 Exam Sandbox Mode</button>
                 <button id="mode-study" class="mode-btn">📖 Deep Study Mode</button>
             </div>
+            <!-- Theme Changer Switch Button -->
             <button id="theme-toggle-trigger" class="theme-switch-btn">☀️ Light Mode</button>
         </div>
     </header>
 
     <div class="main-frame">
-        <!-- Persistent Sidebar Panel -->
         <sidebar>
             <div class="sidebar-heading">Available Study Modules</div>
             <div id="sidebar-menu-list">Scanning catalog items...</div>
             
             <div class="metadata-box">
-                <strong style="display: block; margin-bottom: 4px;">Workspace Connection:</strong>
-                <div id="sidebar-file-status">Please select a study module from the choices above.</div>
+                <strong style="display: block; margin-bottom: 4px;">Active Workspace Status:</strong>
+                <div id="sidebar-file-status">Please select a study module from the menu tracking panel.</div>
             </div>
         </sidebar>
 
-        <!-- Main Workspace Area -->
         <section class="workspace">
             <div id="welcome-view" class="box">
                 <div style="text-align: center; padding: 60px 20px;">
-                    <h2 style="font-size: 26px; font-weight: bold; margin-bottom: 12px; color: #2563eb;">Architectural Dashboard Online</h2>
-                    <p style="color: #64748b; font-size: 16px; max-w: 600px; margin: 0 auto; line-height: 1.5;">Widescreen optimization completely covers the margins. Pick a study target from the side control list to populate questions or reference text sheet guides.</p>
+                    <h2 style="font-size: 26px; font-weight: bold; margin-bottom: 12px; color: #2563eb;">E2E Architectural Workspace Active</h2>
+                    <p style="color: #64748b; font-size: 16px; max-w: 600px; margin: 0 auto; line-height: 1.5;">The framework has expanded to fill 100% of your screen width. Pick a target module down the left control bar to begin studying or practicing metrics.</p>
                 </div>
             </div>
 
-            <!-- Quiz Presentation Area -->
+            <!-- Quiz Layout View -->
             <div id="sandbox-view" class="box hide">
                 <div id="quiz-block">
                     <div class="row">
                         <div id="top-title" style="color: #2563eb;">Module Target</div>
                         <div id="top-status" style="color: #64748b;">Question: 0 / 0</div>
                     </div>
-                    <div id="main-prompt" class="text">Extracting sandbox parameters...</div>
+                    <div id="main-prompt" class="text">Extracting structural criteria blocks...</div>
                     <div id="choices-block"></div>
                     <div id="info-block" class="alert hide"></div>
                     <div class="nav">
@@ -133,32 +140,18 @@
                     </div>
                 </div>
 
-                <!-- Score Result Block -->
                 <div id="end-block" class="hide" style="text-align: center; padding: 20px 0;">
                     <div style="font-size: 50px; margin-bottom: 12px;">🏆</div>
                     <h2 style="margin-bottom: 12px; font-size: 24px;">Module Evaluation Completed</h2>
-                    <h1 id="final-score" style="margin-bottom: 30px; font-size: 42px; color: #2563eb;">0% ACCURACY</h1>
-                    <button id="reload-btn" class="go" style="padding: 12px 28px; font-size: 15px;">Restart This Module</button>
-                </div>
-            </div>
 
-            <!-- Study Reference Panel Area -->
-            <div id="study-view" class="box hide">
-                <div class="row">
-                    <div id="study-title" style="color: #2563eb; font-size: 18px;">Architectural Reference Guide</div>
-                    <div style="color: #64748b; font-size: 13px;">ONTAP Blueprint Ref Documentation</div>
-                </div>
-                <div id="study-content-area" class="study-scroll-panel">
-                    Select a module to pull detailed data verification logs...
-                </div>
-            </div>
-        </section>
-    </div>
+
+
+```html
     <script>
         var pointer = 0;
         var userChoices = [];
         var activeTestSet = [];
-        var currentMode = "exam";
+        var currentMode = "quiz"; 
 
         const sidebarMenu = document.getElementById("sidebar-menu-list");
         const welcomeView = document.getElementById("welcome-view");
@@ -183,6 +176,7 @@
         const modeStudyBtn = document.getElementById("mode-study");
         const themeToggleTrigger = document.getElementById("theme-toggle-trigger");
 
+        // ☀️ / 🌙 THEME TOGGLE SWITCH ACTION ENGINE
         themeToggleTrigger.onclick = function() {
             const bodyObj = document.body;
             if (bodyObj.classList.contains("dark-theme")) {
@@ -196,33 +190,36 @@
             }
         };
 
+        // Persistent Filtering Core Logic Loops
+        function filterSidebarByMode() {
+            const buttons = sidebarMenu.getElementsByClassName("topic-btn");
+            for (var i = 0; i < buttons.length; i++) {
+                const btnText = buttons[i].innerText;
+                if (currentMode === "quiz") {
+                    if (btnText.includes("[📖 Study]")) buttons[i].classList.add("hide");
+                    else buttons[i].classList.remove("hide");
+                } else {
+                    if (btnText.includes("[📝 Exam]")) buttons[i].classList.add("hide");
+                    else buttons[i].classList.remove("hide");
+                }
+            }
+        }
 
- modeQuizBtn.onclick = function() {
+        modeQuizBtn.onclick = function() {
+            currentMode = "quiz";
+            modeQuizBtn.classList.add("active");
+            modeStudyBtn.classList.remove("active");
+            filterSidebarByMode();
+            syncViewVisibility();
+        };
 
-    currentMode = "exam";
-
-    modeQuizBtn.classList.add("active");
-    modeStudyBtn.classList.remove("active");
-
-    loadManifest();
-
-    if (activeTestSet.length > 0) {
-        syncViewVisibility();
-    }
-};
-   modeStudyBtn.onclick = function() {
-
-    currentMode = "study";
-
-    modeStudyBtn.classList.add("active");
-    modeQuizBtn.classList.remove("active");
-
-    loadManifest();
-
-    if (activeTestSet.length > 0) {
-        syncViewVisibility();
-    }
-};
+        modeStudyBtn.onclick = function() {
+            currentMode = "study";
+            modeStudyBtn.classList.add("active");
+            modeQuizBtn.classList.remove("active");
+            filterSidebarByMode();
+            syncViewVisibility();
+        };
 
         function syncViewVisibility() {
             if (activeTestSet.length === 0) return;
@@ -238,47 +235,24 @@
             }
         }
 
-        // DIRECT LOGIC CORRECTION: Fully verified manifest pull function
-    function loadManifest() {
-
-    fetch("manifest.json")
-    .then(function(res) {
-        return res.json();
-    })
-    .then(function(modules) {
-
-        sidebarMenu.innerHTML = "";
-
-        const filteredModules = modules.filter(function(mod) {
-            return mod.type === currentMode;
-        });
-
-        filteredModules.forEach(function(mod) {
-
-            const btn = document.createElement("button");
-
-            btn.className = "topic-btn";
-
-            btn.innerText =
-                currentMode === "study"
-                ? "📖 " + mod.name
-                : "📝 " + mod.name;
-
-            btn.onclick = function() {
-                loadModuleScript(mod.file);
-            };
-
-            sidebarMenu.appendChild(btn);
-        });
-
-    })
-    .catch(function() {
-
-        sidebarMenu.innerHTML =
-        "<div style='color:#ef4444;font-size:12px;'>Unable to load manifest.json</div>";
-
-    });
-}
+        function loadManifest() {
+            fetch('manifest.json')
+                .then(response => response.json())
+                .then(modules => {
+                    sidebarMenu.innerHTML = "";
+                    modules.forEach(mod => {
+                        const btn = document.createElement("button");
+                        btn.className = "topic-btn";
+                        btn.innerText = mod.name;
+                        btn.onclick = () => loadModuleScript(mod.file);
+                        sidebarMenu.appendChild(btn);
+                    });
+                    filterSidebarByMode();
+                })
+                .catch(() => {
+                    sidebarMenu.innerHTML = "<div style='color:#ef4444; font-size:12px;'>Error loading directory catalog index.</div>";
+                });
+        }
 
         function loadModuleScript(filename) {
             const oldScript = document.getElementById('dynamic-module-script');
@@ -372,9 +346,7 @@
         btnForward.onclick = function() { if (pointer === (activeTestSet.length - 1)) { buildSummary(); } else { pointer++; refreshUI(); } };
         document.getElementById("reload-btn").onclick = function() { pointer = 0; userChoices.fill(null); refreshUI(); };
 
-        // Fires the loading sequence automatically upon clean startup
-        window.onload = loadManifest;
+        window.onload = initCatalogIndex;
     </script>
 </body>
 </html>
-
