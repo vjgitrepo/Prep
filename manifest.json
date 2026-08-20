@@ -1,4 +1,4 @@
-
+[
 {
   "type": "exam",
   "name": "dataontap_core",
@@ -42,7 +42,6 @@
   "file": "protection_security.js" 
 }
 
-
 {
   "type": "study",
   "name": "fabricpool study 2",
@@ -64,3 +63,4 @@
   "name": "ONTAP Mixed Protocol Architecture",
   "file": "ontap_mixed_protocol_architecture.js"
 }
+]
