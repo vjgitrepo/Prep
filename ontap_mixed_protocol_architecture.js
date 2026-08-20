@@ -1,3 +1,19 @@
+
+<h2>Section Roadmap</h2>
+
+<ul>
+    <li><strong>Section 1:</strong> Mixed Security Style Fundamentals</li>
+    <li><strong>Section 2:</strong> SVM Configuration For Mixed Access</li>
+    <li><strong>Section 3:</strong> SMB Architecture Deep Dive</li>
+    <li><strong>Section 4:</strong> NFS Export Policy Deep Dive</li>
+    <li><strong>Section 5:</strong> Mixed Protocol Troubleshooting</li>
+    <li><strong>Section 6:</strong> Real World Mixed Mode Issues And Engineering Lessons</li>
+    <li><strong>Section 7:</strong> Name Mapping Deep Dive</li>
+    <li><strong>Section 8:</strong> Export Policy Auditing Methodology</li>
+    <li><strong>Section 9:</strong> Real World Enterprise Case Studies</li>
+</ul>
+
+
 var testSet = [
     {
         title: "ONTAP Mixed Mode Deep Architecture",
@@ -14,7 +30,7 @@ var testSet = [
 ];
 
 var studyNotesPayload = `
-    <h2>Section 10: Mixed Security Style Fundamentals</h2>
+    <h2>Section 1: Mixed Security Style Fundamentals</h2>
 
     <p>
     Mixed security style is designed for environments where Linux NFS clients and Windows SMB clients access the
@@ -42,7 +58,7 @@ volume create -vserver svm_mixed -volume eng_data -aggregate aggr1 -size 5TB -se
 volume show -fields security-style
     </div>
 
-    <h2>Section 11: SVM Configuration For Mixed Access</h2>
+    <h2>Section 2: SVM Configuration For Mixed Access</h2>
 
     <p>
     The Storage Virtual Machine acts as the logical boundary that provides NAS services.
@@ -74,7 +90,7 @@ cifs create -vserver svm_mixed -cifs-server FILES01 -domain corp.local
 network interface show
     </div>
 
-    <h2>Section 12: SMB Architecture Deep Dive</h2>
+    <h2>Section 3: SMB Architecture Deep Dive</h2>
 
     <p>
     SMB access requires Active Directory integration and CIFS server services.
@@ -108,7 +124,7 @@ vserver cifs share show
 vserver cifs show
     </div>
 
-    <h2>Section 13: NFS Export Policy Deep Dive</h2>
+    <h2>Section 4: NFS Export Policy Deep Dive</h2>
 
     <p>
     Export policies determine which Linux clients can mount data and what access level
@@ -229,7 +245,7 @@ vserver services name-service getxxbyyy getpwbyname
         <li>Security style mismatch.</li>
     </ul>
 
-    <h2>Section 15: Real World Mixed Mode Issues And Engineering Lessons</h2>
+    <h2>Section 6: Real World Mixed Mode Issues And Engineering Lessons</h2>
 
     <p>
     The majority of enterprise mixed mode incidents are operational rather than
@@ -334,7 +350,7 @@ security login show
     </div>
 
 
-    <h2>Section 16: Name Mapping Deep Dive</h2>
+    <h2>Section 7: Name Mapping Deep Dive</h2>
 
     <p>
     Name mapping is one of the most important and misunderstood components in a mixed
@@ -414,7 +430,7 @@ vserver services name-service getxxbyyy getpwbyname
     ownership before production rollout.
     </p>
 
-    <h2>Section 17: Export Policy Auditing Methodology</h2>
+    <h2>Section 8: Export Policy Auditing Methodology</h2>
 
     <p>
     Many enterprise outages occur because export policies evolve over years and become
@@ -475,7 +491,7 @@ vserver export-policy show-expanded
         <li>Does the application still use NFS?</li>
     </ul>
 
-    <h2>Section 18: Real World Case Studies From Enterprise Environments</h2>
+    <h2>Section 9: Real World Case Studies From Enterprise Environments</h2>
 
     <h3>Case Study 1: Financial Trading Platform</h3>
 
