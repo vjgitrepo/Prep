@@ -158,7 +158,7 @@
         var pointer = 0;
         var userChoices = [];
         var activeTestSet = [];
-        var currentMode = "quiz"; 
+        var currentMode = "exam";
 
         const sidebarMenu = document.getElementById("sidebar-menu-list");
         const welcomeView = document.getElementById("welcome-view");
@@ -196,35 +196,33 @@
             }
         };
 
-        function filterSidebarByMode() {
-            const buttons = sidebarMenu.getElementsByClassName("topic-btn");
-            for (var i = 0; i < buttons.length; i++) {
-                const btnText = buttons[i].innerText;
-                if (currentMode === "quiz") {
-                    if (btnText.includes("[📖 Study]")) buttons[i].classList.add("hide");
-                    else buttons[i].classList.remove("hide");
-                } else {
-                    if (btnText.includes("[📝 Exam]")) buttons[i].classList.add("hide");
-                    else buttons[i].classList.remove("hide");
-                }
-            }
-        }
 
-        modeQuizBtn.onclick = function() {
-            currentMode = "quiz";
-            modeQuizBtn.classList.add("active");
-            modeStudyBtn.classList.remove("active");
-            filterSidebarByMode();
-            syncViewVisibility();
-        };
+ modeQuizBtn.onclick = function() {
 
-        modeStudyBtn.onclick = function() {
-            currentMode = "study";
-            modeStudyBtn.classList.add("active");
-            modeQuizBtn.classList.remove("active");
-            filterSidebarByMode();
-            syncViewVisibility();
-        };
+    currentMode = "exam";
+
+    modeQuizBtn.classList.add("active");
+    modeStudyBtn.classList.remove("active");
+
+    loadManifest();
+
+    if (activeTestSet.length > 0) {
+        syncViewVisibility();
+    }
+};
+   modeStudyBtn.onclick = function() {
+
+    currentMode = "study";
+
+    modeStudyBtn.classList.add("active");
+    modeQuizBtn.classList.remove("active");
+
+    loadManifest();
+
+    if (activeTestSet.length > 0) {
+        syncViewVisibility();
+    }
+};
 
         function syncViewVisibility() {
             if (activeTestSet.length === 0) return;
@@ -241,24 +239,46 @@
         }
 
         // DIRECT LOGIC CORRECTION: Fully verified manifest pull function
-        function loadManifest() {
-            fetch('manifest.json')
-                .then(function(res) { return res.json(); })
-                .then(function(modules) {
-                    sidebarMenu.innerHTML = "";
-                    modules.forEach(function(mod) {
-                        var btn = document.createElement("button");
-                        btn.className = "topic-btn";
-                        btn.innerText = mod.name;
-                        btn.onclick = function() { loadModuleScript(mod.file); };
-                        sidebarMenu.appendChild(btn);
-                    });
-                    filterSidebarByMode();
-                })
-                .catch(function() {
-                    sidebarMenu.innerHTML = "<div style='color:#ef4444; font-size:12px;'>Error reading folder manifest catalog framework index.</div>";
-                });
-        }
+    function loadManifest() {
+
+    fetch("manifest.json")
+    .then(function(res) {
+        return res.json();
+    })
+    .then(function(modules) {
+
+        sidebarMenu.innerHTML = "";
+
+        const filteredModules = modules.filter(function(mod) {
+            return mod.type === currentMode;
+        });
+
+        filteredModules.forEach(function(mod) {
+
+            const btn = document.createElement("button");
+
+            btn.className = "topic-btn";
+
+            btn.innerText =
+                currentMode === "study"
+                ? "📖 " + mod.name
+                : "📝 " + mod.name;
+
+            btn.onclick = function() {
+                loadModuleScript(mod.file);
+            };
+
+            sidebarMenu.appendChild(btn);
+        });
+
+    })
+    .catch(function() {
+
+        sidebarMenu.innerHTML =
+        "<div style='color:#ef4444;font-size:12px;'>Unable to load manifest.json</div>";
+
+    });
+}
 
         function loadModuleScript(filename) {
             const oldScript = document.getElementById('dynamic-module-script');
