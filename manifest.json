@@ -23,5 +23,6 @@
   , 
   { "name": "[📖 Study] s3 hybrid deepdive", "file": "s3_hybrid_deepdive.js" } 
   , 
-  { "name": "[📖 Study] snapsmirror s3 ", "file": "snapsmirror_s3.js" } 
+  { "name": "[📖 Study] test ", "file": "test.js" } 
+  
 ] 
